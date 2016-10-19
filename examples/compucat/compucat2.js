@@ -193,7 +193,7 @@ sensor.then(function(tag) {
 
 sensor.then(function(tag) {
   tag.on('magnetometerChange', function(x, y, z){
-    log("X: " + x + ", Y: " + y + ", Z: " + z);
+    // log("X: " + x + ", Y: " + y + ", Z: " + z);
 
     magnetometerChangeAbs = Math.abs(x)+ Math.abs(y) + Math.abs(z);
 
