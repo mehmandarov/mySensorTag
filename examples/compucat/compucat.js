@@ -55,6 +55,15 @@ var sensor = connected.then(function(tag) {
 
   tag.enableLuxometer(log);
   tag.notifyLuxometer(log);
+
+  tag.enableHumidity(log);
+  tag.notifyHumidity(log);
+
+  tag.enableMagnetometer(log);
+  tag.notifyMagnetometer(log);
+
+  tag.enableBarometricPressure(log);
+  tag.notifyBarometricPressure(log);
   return tag;
 });
 
