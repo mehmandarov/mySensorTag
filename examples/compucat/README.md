@@ -1,5 +1,12 @@
 # COMPUCAT
 
+Introducing COMPUCAT 2.0!
+
+The COMPUCAT you all like and love is back with updated features.
+
+	- Some people might call Electromagnetic hypersensitivity (EHS) bullshit, humans can not sense magentic fields, but COMPUCAT can. Leave a magnet close to COMPUCAT and begins to complain (Just like Gro Harlem Brundtland)
+	- COMPUCAT can now sence alitude. Rise the COMPUCAT up high or put it on the floor and witness a witty remark from beloved electronic cat
+
 Say hi to COMPUCAT! 
 
 Remember Tamagochi from your childhood? Miss it? Don't be sad! COMPUCAT IS HERE!
