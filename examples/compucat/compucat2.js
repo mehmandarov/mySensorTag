@@ -79,6 +79,7 @@ var sensor = connected.then(function(tag) {
 });
 
 var magnetometerChangeAbs = 0;
+var startPreasure = -1;
 
 // sensor.then(function(tag) {
 //   tag.on('magnetometerChange', function(x, y, z){
@@ -93,7 +94,15 @@ var magnetometerChangeAbs = 0;
 
 sensor.then(function(tag) {
   tag.on('barometricPressureChange', function(pressure){
-    log("pressure: " + pressure);
+
+    if(startPreasure == -1 && pressure != 0){
+        startPreasure = pressure;
+    }
+    if(startPreasure != -1){
+        if(pressure >= startPreasure + 0.2) log("I can see my house from here!";
+        else if(pressure <= startPreasure - 0.2) log("I'm feeling down :(";
+    }
+    
   });
 });
 
