@@ -99,7 +99,7 @@ sensor.then(function(tag) {
         startPreasure = pressure;
     }
     if(startPreasure != -1){
-        if(pressure >= startPreasure + 0.2) log("I can see my house from here!";
+        if(pressure >= startPreasure + 0.2) log("I can see my house from here!");
         else if(pressure <= startPreasure - 0.2) log("I'm feeling down :(";
     }
     
