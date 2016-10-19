@@ -78,6 +78,9 @@ var sensor = connected.then(function(tag) {
 sensor.then(function(tag) {
   tag.on('magnetometerChange', function(x, y, z){
     log("X: " + x + ", Y: " + y + ", Z: " + z);
+    if(Math.abs(x) > 1000){
+      log("hey hey hey hey");
+    }
   });
 });
 
