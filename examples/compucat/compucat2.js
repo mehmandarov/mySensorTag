@@ -81,16 +81,16 @@ var sensor = connected.then(function(tag) {
 var magnetometerChangeAbs = 0;
 var startPreasure = -1;
 
-// sensor.then(function(tag) {
-//   tag.on('magnetometerChange', function(x, y, z){
-//     log("X: " + x + ", Y: " + y + ", Z: " + z);
+sensor.then(function(tag) {
+  tag.on('magnetometerChange', function(x, y, z){
+    log("X: " + x + ", Y: " + y + ", Z: " + z);
 
-//     magnetometerChangeAbs = Math.abs(x)+ Math.abs(y) + Math.abs(z);
-//     if(magnetometerChangeAbs > 1000){
-//       log("COMPUCAT: bznn bznzb bnzz. I am sensitive to electricity and electromagnetic fields! ");
-//     }
-//   });
-// });
+    magnetometerChangeAbs = Math.abs(x)+ Math.abs(y) + Math.abs(z);
+    if(magnetometerChangeAbs > 1000){
+      log("COMPUCAT: bznn bznzb bnzz. I am sensitive to electricity and electromagnetic fields! ");
+    }
+  });
+});
 
 sensor.then(function(tag) {
   tag.on('barometricPressureChange', function(pressure){
@@ -100,8 +100,8 @@ sensor.then(function(tag) {
         log("Start preasure is " + startPreasure)
     }
     if(startPreasure != -1){
-        if(pressure >= startPreasure + 0.05) log("I can see my house from here!");
-        else if(pressure <= startPreasure - 0.05) log("I'm feeling down :(");
+        if(pressure >= startPreasure + 0.05) log("I'm feeling down :(");
+        else if(pressure <= startPreasure - 0.05) log("I can see my house from here!"); 
         else log("Preasure: " + pressure)
     }
     
