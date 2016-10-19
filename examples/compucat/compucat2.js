@@ -64,48 +64,137 @@ var sensor = connected.then(function(tag) {
 
   tag.enableBarometricPressure(log);
   tag.notifyBarometricPressure(log);
-
-  tag.enableMagnetometer(log);
-  tag.notifyMagnetometer(log);
-
-
-  tag.enableBarometricPressure(log);
-  tag.notifyBarometricPressure(log);
-  
-
-  
-
   return tag;
 });
 
+
+//Variables
+var slowTime = 0
+var lightLevel = 0
+var wasShocked = 0
+var objectTempStat = 0
+var resurection = 0
 var magnetometerChangeAbs = 0;
-var startPreasure = -1;
+
+sensor.then(function(tag) {
+  tag.on("gyroscopeChange", function(x, y, z){
+    //log(x + "," + y + "," + z)
+    if(wasShocked > 15){
+      if(objectTempStat >= 30)
+        resurection ++
+      if(resurection > 5){
+
+        log("<COMPUCAT is coming back to life>")
+        wasShocked = 0
+        resurection = 0
+      }
+      else if(resurection > 1){
+        log("<COMPUCAT is warming up>")
+      }
+      else{
+        log("COMPUCAT IS DEAD!")
+        log("R.I.P!")
+      }
+    } 
+    else if(wasShocked == 9){
+      for (var i = 0; i <= 20; i++) {
+        log(" ")
+      }
+      log("You killed COMPUCAT :(")
+      wasShocked +=20
+    }
+    else if((x > 20 || y > 20 || z > 20) && wasShocked > 5){
+      log("COMPUCAT: Blouughghgh [puking]")
+      wasShocked ++
+    } 
+    else if((x > 20 || y > 20 || z > 20) && wasShocked > 3){
+      log("COMPUCAT: I'm dizzy, put me down!")
+      slowTime = 0
+      wasShocked ++
+    }
+    else if((x > 20 || y > 20 || z > 20) && wasShocked >= 1){
+      log("COMPUCAT: HEEYYYYYYY!")
+      slowTime = 0
+      wasShocked ++
+    }
+    else  if(x > 16 || y > 16 || z > 16){
+      log("COMPUCAT: What was that????!")
+      wasShocked ++
+      slowTime = 0
+    }
+    else{
+      wasShocked = 0
+      
+      slowTime ++
+      if(magnetometerChangeAbs > 1000){
+        log("COMPUCAT: bznn bznzb bnzz. I am sensitive to electricity and electromagnetic fields! ");
+      }
+      else if(slowTime > 10 && lightLevel < 15){
+        if(slowTime % 4 == 0) log("COMPUCAT: zzZz")
+        else if(slowTime % 2 == 0) log("COMPUCAT: zZZZZzzZZzzz")
+        else log("COMPUCAT: zZZzZZZzzZZzzzzzzzZZzzzzZz")
+
+      }
+    else  if(objectTempStat > 30 && slowTime > 1 && slowTime < 5) {
+        log("COMPUCAT: I love hugs! Mmmmm...");
+        slowTime ++
+      }
+      else if (slowTime > 6 && lightLevel < 15){
+        log("COMPUCAT: Getting sleepy")
+      }
+      else if (slowTime > 3 && lightLevel < 15){
+        log("COMPUCAT: Is it night already?")
+      }
+      else if(lightLevel > 80) {
+        log("COMPUCAT: My sensors!! So bright!!");
+        slowTime = 0
+      }
+
+      else if (slowTime > 1){
+        log("COMPUCAT: Relaxing")
+        if(lightLevel > 20) slowTime = 2
+      }
+
+      else{
+        log("COMPUCAT: Shocked ")
+      }
+    }
+  
+  });
+});
+
+sensor.then(function(tag) {
+  tag.on("luxometerChange", function(lux){
+    lightLevel = lux
+
+  });
+});
+
+sensor.then(function(tag) {
+  tag.on("irTemperatureChange", function(objectTemp, ambientTemp) {
+    objectTempStat = objectTemp
+    if(objectTemp < 20) {
+      log("COMPUCAT: Brrrrr, I'm freezing. Can I get a hug?")
+    }
+  })
+});
+
+sensor.then(function(tag) {
+  tag.on("accelerometerChange", function(x,y,z){
+    if(Math.abs(x) > 3.5 || Math.abs(y) > 3.5 || Math.abs(z) > 3.5) {
+
+      log("COMPUCAT: To infinity, AND BEYOND!!!!");
+    }
+      
+  });
+});
+
 
 sensor.then(function(tag) {
   tag.on('magnetometerChange', function(x, y, z){
-    // log("X: " + x + ", Y: " + y + ", Z: " + z);
+    log("X: " + x + ", Y: " + y + ", Z: " + z);
 
     magnetometerChangeAbs = Math.abs(x)+ Math.abs(y) + Math.abs(z);
-    if(magnetometerChangeAbs > 1000){
-      log("COMPUCAT: bznn bznzb bnzz. I am sensitive to electricity and electromagnetic fields! ");
-    }
+
   });
 });
-
-sensor.then(function(tag) {
-  tag.on('barometricPressureChange', function(pressure){
-
-    if(startPreasure == -1 && pressure != 0){
-        startPreasure = pressure;
-        log("Start preasure is " + startPreasure)
-    }
-    if(startPreasure != -1){
-        if(pressure >= startPreasure + 0.05) log("I'm feeling down :(");
-        else if(pressure <= startPreasure - 0.05) log("I can see my house from here!"); 
-        // else log("Preasure: " + pressure)
-    }
-    
-  });
-});
-
-
