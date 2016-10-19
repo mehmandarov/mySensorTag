@@ -92,7 +92,7 @@ var magnetometerChangeAbs = 0;
 // });
 
 sensor.then(function(tag) {
-  tag.on('barometricPressureChange', function(pressure))
+  tag.on('barometricPressureChange', function(pressure){
     log("pressure: " + pressure);
   });
 });
