@@ -74,6 +74,8 @@ var lightLevel = 0
 var wasShocked = 0
 var objectTempStat = 0
 var resurection = 0
+var startPreasure = -1;
+var magnetometerChangeAbs = 0;
 
 sensor.then(function(tag) {
   tag.on("gyroscopeChange", function(x, y, z){
@@ -125,7 +127,10 @@ sensor.then(function(tag) {
       wasShocked = 0
       
       slowTime ++
-      if(slowTime > 10 && lightLevel < 15){
+      if(magnetometerChangeAbs > 1000){
+        log("COMPUCAT: bznn bznzb bnzz. I am sensitive to electricity and electromagnetic fields! ");
+      }
+      else if(slowTime > 10 && lightLevel < 15){
         if(slowTime % 4 == 0) log("COMPUCAT: zzZz")
         else if(slowTime % 2 == 0) log("COMPUCAT: zZZZZzzZZzzz")
         else log("COMPUCAT: zZZzZZZzzZZzzzzzzzZZzzzzZz")
@@ -142,7 +147,7 @@ sensor.then(function(tag) {
         log("COMPUCAT: Is it night already?")
       }
       else if(lightLevel > 80) {
-        log("COMPUCAT: My sensors!! So bright! I can nearly sense.");
+        log("COMPUCAT: My sensors!! So bright!!");
         slowTime = 0
       }
 
@@ -182,5 +187,31 @@ sensor.then(function(tag) {
       log("COMPUCAT: To infinity, AND BEYOND!!!!");
     }
       
+  });
+});
+
+
+sensor.then(function(tag) {
+  tag.on('magnetometerChange', function(x, y, z){
+    // log("X: " + x + ", Y: " + y + ", Z: " + z);
+
+    magnetometerChangeAbs = Math.abs(x)+ Math.abs(y) + Math.abs(z);
+
+  });
+});
+
+sensor.then(function(tag) {
+  tag.on('barometricPressureChange', function(pressure){
+
+    if(startPreasure == -1 && pressure != 0){
+        startPreasure = pressure;
+        // log("Start preasure is " + startPreasure)
+    }
+    if(startPreasure != -1){
+        if(pressure >= startPreasure + 0.05) log("I'm feeling down :(");
+        else if(pressure <= startPreasure - 0.05) log("I can see my house from here!"); 
+        // else log("Preasure: " + pressure)
+    }
+    
   });
 });
