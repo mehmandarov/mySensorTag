@@ -83,7 +83,7 @@ var startPreasure = -1;
 
 sensor.then(function(tag) {
   tag.on('magnetometerChange', function(x, y, z){
-    log("X: " + x + ", Y: " + y + ", Z: " + z);
+    // log("X: " + x + ", Y: " + y + ", Z: " + z);
 
     magnetometerChangeAbs = Math.abs(x)+ Math.abs(y) + Math.abs(z);
     if(magnetometerChangeAbs > 1000){
@@ -102,7 +102,7 @@ sensor.then(function(tag) {
     if(startPreasure != -1){
         if(pressure >= startPreasure + 0.05) log("I'm feeling down :(");
         else if(pressure <= startPreasure - 0.05) log("I can see my house from here!"); 
-        else log("Preasure: " + pressure)
+        // else log("Preasure: " + pressure)
     }
     
   });
