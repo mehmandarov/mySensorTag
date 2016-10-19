@@ -76,7 +76,7 @@ var sensor = connected.then(function(tag) {
 
 
 sensor.then(function(tag) {
-  tag.on('magnetometerChange', callback(x, y, z)){
+  tag.on('magnetometerChange', function(x, y, z){
     log("X: " + x ", Y: " + y + ", Z: " + z);
   });
 });
