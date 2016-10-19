@@ -68,19 +68,32 @@ var sensor = connected.then(function(tag) {
   tag.enableMagnetometer(log);
   tag.notifyMagnetometer(log);
 
+
+  tag.enableBarometricPressure(log);
+  tag.notifyBarometricPressure(log);
+  
+
   
 
   return tag;
 });
 
+var magnetometerChangeAbs = 0;
 
+// sensor.then(function(tag) {
+//   tag.on('magnetometerChange', function(x, y, z){
+//     log("X: " + x + ", Y: " + y + ", Z: " + z);
+
+//     magnetometerChangeAbs = Math.abs(x)+ Math.abs(y) + Math.abs(z);
+//     if(magnetometerChangeAbs > 1000){
+//       log("COMPUCAT: bznn bznzb bnzz. I am sensitive to electricity and electromagnetic fields! ");
+//     }
+//   });
+// });
 
 sensor.then(function(tag) {
-  tag.on('magnetometerChange', function(x, y, z){
-    log("X: " + x + ", Y: " + y + ", Z: " + z);
-    if(Math.abs(x) > 1000){
-      log("hey hey hey hey");
-    }
+  tag.on('barometricPressureChange', function(pressure))
+    log("pressure: " + pressure);
   });
 });
 
